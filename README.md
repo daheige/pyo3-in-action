@@ -2,6 +2,19 @@
 
 rust pyo3 for python extension-module
 
+# pyo3包
+
+- pyo3作为一个组件库，可用于生成本机Python模块，它不仅可以使用rust编写python模块，同时它提供了rust和python互操作，也就是说rust中也可以调用python的相关模块。
+- pyo3库依赖于Python的C扩展机制，因此在使用之前需要确保你的系统已经安装了适当的编译器和依赖项。此外，pyo3目前仅支持Linux和macOS操作系统。对于Windows用户，可以使用Cygwin或Windows
+  Subsystem for Linux (WSL)来运行pyo3。
+- 另外，如果你要在生产环境中使用Python与Rust的集成，还需要考虑性能、错误处理和安全性等方面的问题。
+- pyo3库提供了一种简单的方式来在Python中调用Rust代码，使得Python和Rust之间的集成更加方便。
+
+官网文档：
+
+- https://crates.io/crates/pyo3
+- https://github.com/pyo3/pyo3
+
 # pyo3为python编写拓展
 
 版本约定：
@@ -77,6 +90,8 @@ fn string_utils(m: &Bound<'_, PyModule>) -> PyResult<()> {
 
 maturin主要作用：使用pyo3, rust-cpython或cffi绑定以及rust二进制文件作为python包构建和发布crate
 
+首先，执行下面的命令创建一个包含新的Python virtualenv的新目录，并使用Python的包管理器pip将maturin安装到虚拟环境中。
+
 ```shell
 cd string_utils
 # 创建一个python虚拟环境
@@ -100,6 +115,16 @@ pip3 install maturin
 maturin develop
 ```
 
+这个命令会把rust pyo3编写的python模块编译为共享库xxx.so文件（不同平台生成的so文件名字不一样），放在.env/lib/python3.9/site-packages/string_utils目录下面。
+
+```shell
+➜  cd .env/lib/python3.9/site-packages/string_utils
+➜  ls
+__init__.py                       string_utils.cpython-39-darwin.so
+```
+
+这个string_utils 是可以复制到你的python其他项目中作为独立的模块使用。
+
 # 进入python3终端运行
 
 ```shell
@@ -121,3 +146,25 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 上面的demo运行效果如下图所示：
 ![](pyo3-run.jpg)
+
+# python文件中引入string_utils模块
+
+- 当我们完成上面的pyo3编写的string_utils模块后，在.env/lib/python3.9/site-packages/目录下面有一个`string_utils`
+  模块，它是可以被复制到python项目中使用的。
+- 为了验证这一点，我们新建一个python-demo项目把.env/lib/python3.9/site-packages/string_utils复制到python-demo目录，然后添加一个main.py文件，并添加如下代码：
+
+```python
+import string_utils;
+
+x = string_utils.sum_as_string(12, 1);
+print("x = ", x);
+
+s = string_utils.explode("a,b,c", ",")
+print("s = ", s);
+
+arr = s = string_utils.implode(['a', 'b', 'c'], ",")
+print("arr = ", arr);
+```
+
+运行python3 main.py，效果如下图所示：
+![](python-demo-run.jpg)
