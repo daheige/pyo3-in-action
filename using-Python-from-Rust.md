@@ -1,10 +1,11 @@
 # 在rust中使用python的模块
 
 要将Python嵌入到Rust二进制文件中，需要确保Python安装包含一个共享库。
-假设我们用的ubuntu操作系统，先需要安装好python3环境，安装方式如下：
+假设我们用的ubuntu操作系统，先需要安装好python3环境和pip3，安装方式如下：
 
 ```shell
-sudo apt install python3-dev
+sudo apt install python3-dev python3-pip
+python3 -m pip install --upgrade pip
 ```
 
 当安装好python3后，就可以通过 `cargo new rs-python-demo` 命令创建一个rust二进制应用，并在Cargo.toml中添加如下依赖：
@@ -35,5 +36,5 @@ fn main() -> PyResult<()> {
 }
 ```
 
-当运行cargo run就会看到对应的提示。
-
+当运行cargo run就会看到对应的提示，如下图所示：
+![](rs-python-run.jpg)
