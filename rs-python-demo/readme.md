@@ -37,4 +37,4 @@ fn main() -> PyResult<()> {
 ```
 
 当运行cargo run就会看到对应的提示，如下图所示：
-![](rs-python-run.jpg)
+![](../rs-python-run.jpg)

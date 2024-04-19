@@ -179,3 +179,7 @@ sh bin/docker-rs.sh
 
 效果如下图所示：
 ![](docker-run.jpg)
+
+# 如何rust中调用python模块
+
+直接看rs-python-demo即可
