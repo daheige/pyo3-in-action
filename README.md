@@ -101,7 +101,7 @@ source .env/bin/activate
 pip3 install maturin
 ```
 
-- 如果你是通过cargo new --lib string_sum方式创建的lib，就不需要执行上面的 maturin init操作。
+- 如果你是通过cargo new --lib string_utils方式创建的library，就不需要执行maturin init操作。
 - 如果你是在一个目录中执行python虚拟机环境创建并激活后，那你可以 maturin 创建一个rust library库，操作如下：
     ```shell
     maturin init --bindings pyo3
